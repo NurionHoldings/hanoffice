@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { dirname,join,extname,normalize,sep } from "node:path";
 import { platform,plans,allowedTerms,calculateQuote,isLaunchReady } from "./src/catalog.mjs";
 const root=dirname(fileURLToPath(import.meta.url));
-const mime={".html":"text/html; charset=utf-8",".js":"text/javascript; charset=utf-8",".css":"text/css; charset=utf-8",".svg":"image/svg+xml",".json":"application/json; charset=utf-8"};
+const mime={".html":"text/html; charset=utf-8",".js":"text/javascript; charset=utf-8",".mjs":"text/javascript; charset=utf-8",".css":"text/css; charset=utf-8",".svg":"image/svg+xml",".json":"application/json; charset=utf-8"};
 const MAX_BODY=8192;
 function reply(res,status,data,headers={}) {
   res.writeHead(status,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store","X-Content-Type-Options":"nosniff",...headers});
@@ -23,7 +23,7 @@ async function getBody(req) {
 async function serveFile(req,res,path) {
   const pathWithin=path==="/"?"index.html":decodeURIComponent(path).replace(/^\/+/, "");
   const safe=normalize(pathWithin);
-  if (safe.startsWith("..") || safe.includes(".."+sep) || !["index.html","styles.css","app.js"].includes(safe)){
+  if (safe.startsWith("..") || safe.includes(".."+sep) || !["index.html","styles.css","app.js","portal.html","portal.css","portal.js","portal-model.mjs"].includes(safe)){
     return reply(res,404,{error:"NOT_FOUND"});
   }
   try {
