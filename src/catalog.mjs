@@ -1,6 +1,6 @@
-/** ARKAON BIZ OFFICE - catalog and quotations. Illustrative pricing only. */
+/** HAN BIZ OFFICE - catalog and quotations. Illustrative pricing only. */
 export const platform = Object.freeze({
-  brand: "ARKAON BIZ OFFICE",
+  brand: "HAN BIZ OFFICE",
   operator: "(주)청전에스오엔지",
   domain: null,
   pgProvider: "헥토파이낸셜",
@@ -40,5 +40,5 @@ export function calculateQuote({type="individual", months=12, mail=false, meetin
     isIllustrative:true,canCheckout:false,priceVersion:"demo-2026-11-24" };
 }
 export function isLaunchReady(gates=platform.launchGate) {
-  return Object.values(gates).length===6 && Object.values(gates).every(value=>value===true);
+  return gates!==null && typeof gates==='object' && Object.keys(gates).length===6 && Object.keys(platform.launchGate).every(key=>Object.hasOwn(gates,key)&&gates[key]===true);
 }

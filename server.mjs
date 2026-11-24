@@ -21,7 +21,7 @@ async function getBody(req) {
   catch{const e=new Error("잘못된 JSON입니다.");e.status=400;throw e;}
 }
 async function serveFile(req,res,path) {
-  const pathWithin=path==="/"?"index.html":decodeURIComponent(path).replace(/^\/+/, "");
+  let pathWithin;try{pathWithin=path==="/"?"index.html":decodeURIComponent(path).replace(/^\/+/, "");}catch{return reply(res,400,{error:"BAD_REQUEST"});}
   const safe=normalize(pathWithin);
   if (safe.startsWith("..") || safe.includes(".."+sep) || !["index.html","styles.css","app.js","portal.html","portal.css","portal.js","portal-model.mjs","location.html","location.css","location.js","location-model.mjs","contract.html","contract.css","contract.js","contract-model.mjs"].includes(safe)){
     return reply(res,404,{error:"NOT_FOUND"});
@@ -31,7 +31,7 @@ async function serveFile(req,res,path) {
     const s=await stat(filename);
     if(!s.isFile()) return reply(res,404,{error:"NOT_FOUND"});
     res.writeHead(200,{"Content-Type":mime[extname(filename)]||"application/octet-stream","X-Content-Type-Options":"nosniff","Cache-Control":"no-cache"});
-    res.end(await readFile(filename));
+    res.end(req.method==="HEAD"?undefined:await readFile(filename));
   } catch { reply(res,404,{error:"NOT_FOUND"}); }
 }
 export function createApp() {
