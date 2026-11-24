@@ -1,0 +1,1 @@
+export const handler=async()=>({statusCode:503,headers:{'Content-Type':'application/json','Cache-Control':'no-store'},body:JSON.stringify({error:'LAUNCH_BLOCKED'})});
