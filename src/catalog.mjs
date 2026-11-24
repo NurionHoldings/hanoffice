@@ -40,5 +40,5 @@ export function calculateQuote({type="individual", months=12, mail=false, meetin
     isIllustrative:true,canCheckout:false,priceVersion:"demo-2026-11-24" };
 }
 export function isLaunchReady(gates=platform.launchGate) {
-  return Object.values(gates).length===6 && Object.values(gates).every(value=>value===true);
+  return gates!==null && typeof gates==='object' && Object.keys(gates).length===6 && Object.keys(platform.launchGate).every(key=>Object.hasOwn(gates,key)&&gates[key]===true);
 }
