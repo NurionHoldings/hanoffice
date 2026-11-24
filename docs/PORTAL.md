@@ -1,0 +1,2 @@
+# Portal preview
+Public synthetic-data UI only. The admin/customer switch is not authentication. No actual customer information, document, payment, mail, or admin API is accessible. State is in browser memory only. Production requires server-side identity, MFA, role/tenant checks, PostgreSQL transactions, document storage, audit records and authorization tests. Do not expose real data through this preview.
