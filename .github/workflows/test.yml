@@ -1,9 +1,9 @@
 name: HANOFFICE foundation checks
 on:
   push:
-    branches: [main, feat/arkaon-biz-office-foundation, feat/operations-core, feat/operations-portal, feat/location-preview, feat/e-contract-preview]
+    branches: [main, feat/arkaon-biz-office-foundation, feat/operations-core, feat/operations-portal, feat/location-preview, feat/e-contract-preview, feat/payment-sandbox]
   pull_request:
-    branches: [main, feat/arkaon-biz-office-foundation, feat/operations-core, feat/operations-portal, feat/location-preview]
+    branches: [main, feat/arkaon-biz-office-foundation, feat/operations-core, feat/operations-portal, feat/location-preview, feat/e-contract-preview]
 permissions:
   contents: read
 jobs:
