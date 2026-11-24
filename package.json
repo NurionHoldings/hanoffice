@@ -1,0 +1,14 @@
+{
+  "name": "arkaon-biz-office",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ARKAON BIZ OFFICE — safe public demo and reservation-free pricing engine",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "start": "node server.mjs",
+    "test": "node --test",
+    "check": "node --check server.mjs && node --check src/catalog.mjs"
+  },
+  "engines": { "node": ">=20" }
+}
