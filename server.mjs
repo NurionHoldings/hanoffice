@@ -23,7 +23,7 @@ async function getBody(req) {
 async function serveFile(req,res,path) {
   const pathWithin=path==="/"?"index.html":decodeURIComponent(path).replace(/^\/+/, "");
   const safe=normalize(pathWithin);
-  if (safe.startsWith("..") || safe.includes(".."+sep) || !["index.html","styles.css","app.js","portal.html","portal.css","portal.js","portal-model.mjs"].includes(safe)){
+  if (safe.startsWith("..") || safe.includes(".."+sep) || !["index.html","styles.css","app.js","portal.html","portal.css","portal.js","portal-model.mjs","location.html","location.css","location.js","location-model.mjs"].includes(safe)){
     return reply(res,404,{error:"NOT_FOUND"});
   }
   try {
