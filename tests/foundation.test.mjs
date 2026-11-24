@@ -38,5 +38,5 @@ test("HTTP endpoints work while all real transaction paths stay blocked",async(t
  assert.equal(cfg.branch.address,"서울특별시 종로구 새문안로 15-1");
  const index=await fetch(base+"/");
  assert.equal(index.status,200);
- assert.match(await index.text(),/ARKAON BIZ OFFICE/);
+ assert.match(await index.text(),/HAN BIZ OFFICE/);
 });
