@@ -1,0 +1,11 @@
+BEGIN;
+CREATE TABLE branches(id text PRIMARY KEY,address text NOT NULL,unit text,rights_verified boolean NOT NULL DEFAULT false, use_verified boolean NOT NULL DEFAULT false, enabled boolean NOT NULL DEFAULT false, CHECK(NOT enabled OR (rights_verified AND use_verified AND unit IS NOT NULL)));
+CREATE TABLE customers(id uuid PRIMARY KEY, auth_subject text UNIQUE NOT NULL, created_at timestamptz NOT NULL DEFAULT now());
+CREATE TABLE orders(id uuid PRIMARY KEY,customer_id uuid NOT NULL REFERENCES customers(id),branch_id text NOT NULL REFERENCES branches(id),price_version text NOT NULL,amount bigint NOT NULL CHECK(amount>0),currency text NOT NULL DEFAULT 'KRW' CHECK(currency='KRW'),state text NOT NULL CHECK(state IN ('DRAFT','REVIEWED','SIGNED','PAYMENT_PENDING','PAID','ACTIVE','CANCELLED','REFUNDED')),version integer NOT NULL DEFAULT 0,created_at timestamptz NOT NULL DEFAULT now());
+CREATE TABLE contracts(id uuid PRIMARY KEY,order_id uuid UNIQUE NOT NULL REFERENCES orders(id),document_sha256 text NOT NULL CHECK(document_sha256 ~ '^[a-f0-9]{64}$'),document_key text NOT NULL,signature_evidence_key text NOT NULL,signed_at timestamptz NOT NULL);
+CREATE TABLE payments(id uuid PRIMARY KEY,order_id uuid NOT NULL REFERENCES orders(id),provider text NOT NULL CHECK(provider IN ('MOCK','HECTO')),environment text NOT NULL CHECK(environment IN ('TEST','LIVE')),provider_transaction_id text NOT NULL,amount bigint NOT NULL CHECK(amount>0),state text NOT NULL CHECK(state IN ('VERIFIED','REFUNDED')),UNIQUE(provider,environment,provider_transaction_id));
+CREATE UNIQUE INDEX one_verified_payment_per_order ON payments(order_id) WHERE state='VERIFIED';
+CREATE TABLE payment_events(provider text NOT NULL,environment text NOT NULL,event_id text NOT NULL,payload_digest text NOT NULL,received_at timestamptz NOT NULL DEFAULT now(),PRIMARY KEY(provider,environment,event_id));
+CREATE TABLE audit_events(id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,order_id uuid REFERENCES orders(id),actor_subject text NOT NULL,event_type text NOT NULL,created_at timestamptz NOT NULL DEFAULT now());
+INSERT INTO branches(id,address) VALUES ('jongno-001','서울특별시 종로구 새문안로 15-1');
+COMMIT;
