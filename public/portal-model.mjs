@@ -1,0 +1,5 @@
+export const labels=Object.freeze({DRAFT:'신청',REVIEWED:'심사 완료',SIGNED:'모의 서명',PAYMENT_PENDING:'결제 대기',PAID:'모의 결제 완료',ACTIVE:'모의 활성',REFUNDED:'모의 환불'});
+const next=Object.freeze({DRAFT:'REVIEWED',REVIEWED:'SIGNED',SIGNED:'PAYMENT_PENDING',PAYMENT_PENDING:'PAID',PAID:'ACTIVE'});
+export function initialOrders(){return [{id:'DEMO-001',customer:'가상 고객 A',amount:382800,state:'DRAFT'},{id:'DEMO-002',customer:'가상 고객 B',amount:514800,state:'PAYMENT_PENDING'},{id:'DEMO-003',customer:'가상 고객 C',amount:382800,state:'ACTIVE'}]}
+export function advance(orders,id){return orders.map(o=>o.id===id&&next[o.state]?{...o,state:next[o.state]}:o)}
+export function summarize(orders){return {count:orders.length,active:orders.filter(o=>o.state==='ACTIVE').length,paid:orders.filter(o=>['PAID','ACTIVE'].includes(o.state)).reduce((sum,o)=>sum+o.amount,0)}}
