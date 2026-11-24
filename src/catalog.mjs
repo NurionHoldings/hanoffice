@@ -1,6 +1,6 @@
-/** ARKAON BIZ OFFICE - catalog and quotations. Illustrative pricing only. */
+/** HAN BIZ OFFICE - catalog and quotations. Illustrative pricing only. */
 export const platform = Object.freeze({
-  brand: "ARKAON BIZ OFFICE",
+  brand: "HAN BIZ OFFICE",
   operator: "(주)청전에스오엔지",
   domain: null,
   pgProvider: "헥토파이낸셜",
