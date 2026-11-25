@@ -3,9 +3,10 @@ import { readFile, stat } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname,join,extname,normalize,sep } from "node:path";
 import { platform,plans,allowedTerms,calculateQuote,isLaunchReady } from "./src/catalog.mjs";
+import { handlePlatform } from "./src/routes.mjs";
 const root=dirname(fileURLToPath(import.meta.url));
 const mime={".html":"text/html; charset=utf-8",".js":"text/javascript; charset=utf-8",".mjs":"text/javascript; charset=utf-8",".css":"text/css; charset=utf-8",".svg":"image/svg+xml",".json":"application/json; charset=utf-8",".txt":"text/plain; charset=utf-8",".jpg":"image/jpeg",".jpeg":"image/jpeg",".woff2":"font/woff2"};
-const ALLOWED=new Set(["index.html","styles.css","app.js","homepage-model.mjs","portal.html","portal.css","portal.js","portal-model.mjs","location.html","location.css","location.js","location-model.mjs","contract.html","contract.css","contract.js","contract-model.mjs","fonts/pretendard-400.woff2","fonts/pretendard-600.woff2","fonts/pretendard-700.woff2","fonts/OFL.txt","media/saemunan-street.jpg","media/CREDITS.txt"]);
+const ALLOWED=new Set(["index.html","styles.css","app.js","homepage-model.mjs","account.html","account.css","account.js","portal.html","portal.css","portal.js","portal-model.mjs","location.html","location.css","location.js","location-model.mjs","contract.html","contract.css","contract.js","contract-model.mjs","fonts/pretendard-400.woff2","fonts/pretendard-700.woff2","fonts/OFL.txt","media/saemunan-street.jpg","media/CREDITS.txt"]);
 const MAX_BODY=8192;
 function reply(res,status,data,headers={}) {
   res.writeHead(status,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store","X-Content-Type-Options":"nosniff",...headers});
@@ -40,7 +41,8 @@ async function serveFile(req,res,path) {
     res.end(req.method==="HEAD"?undefined:await readFile(filename));
   } catch { reply(res,404,{error:"NOT_FOUND"}); }
 }
-export function createApp() {
+export function createApp(options = {}) {
+ const database = Object.hasOwn(options, "database") ? options.database : undefined;
  return http.createServer(async(req,res)=>{
   let path;
   try{path=new URL(req.url,"http://localhost").pathname;}
@@ -48,11 +50,12 @@ export function createApp() {
   res.setHeader("X-Frame-Options","DENY");
   res.setHeader("Referrer-Policy","strict-origin-when-cross-origin");
   res.setHeader("Content-Security-Policy","default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
-  if (req.method==="GET" && path==="/api/health") return reply(res,200,{status:"ok",phase:"DEMO_ONLY"});
+  if (req.method==="GET" && path==="/api/health") return reply(res,200,{status:"ok",phase:"DEMO_ONLY",identityConnected:false,database:database===null?"unavailable":(database||process.env.DATABASE_URL?"configured":"unavailable")});
   if (req.method==="GET" && path==="/api/config") return reply(res,200,{
     brand:platform.brand,operator:platform.operator,branch:platform.headquarters,
-    pgProvider:platform.pgProvider,plans,allowedTerms,canCheckout:isLaunchReady()
+    pgProvider:platform.pgProvider,plans,allowedTerms,canCheckout:isLaunchReady(),identityConnected:false
   });
+  if (await handlePlatform(req,res,path,database,getBody,reply)) return;
   if (req.method==="POST" && path==="/api/quote") {
     try { const body=await getBody(req);return reply(res,200,calculateQuote(body));}
     catch(err){return reply(res,err.status||400,{error:"INVALID_QUOTE",message:err.message});}

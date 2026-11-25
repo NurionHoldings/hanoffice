@@ -1,5 +1,4 @@
 @font-face{font-family:"Pretendard";font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/pretendard-400.woff2") format("woff2")}
-@font-face{font-family:"Pretendard";font-style:normal;font-weight:600;font-display:swap;src:url("/fonts/pretendard-600.woff2") format("woff2")}
 @font-face{font-family:"Pretendard";font-style:normal;font-weight:700;font-display:swap;src:url("/fonts/pretendard-700.woff2") format("woff2")}
 :root{--ink:#1b2421;--green:#17483d;--green-deep:#0f332b;--muted:#4d5b54;--line:#e3ddd2;--paper:#f6f3ec;--sheet:#fffcf8;--rule:#cfc6b8}
 *{box-sizing:border-box}
@@ -20,10 +19,10 @@ h3{font-size:1.3rem;line-height:1.4;letter-spacing:-.03em;font-weight:700}
 .head{position:sticky;top:0;z-index:10;background:rgba(246,243,236,.94);border-bottom:1px solid var(--line)}
 .nav-inner{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:24px}
 .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;line-height:1.25}
-.brand small{display:block;font-size:10px;letter-spacing:.14em;font-weight:600;color:var(--muted)}
+.brand small{display:block;font-size:10px;letter-spacing:.14em;font-weight:700;color:var(--muted)}
 .brand-logo{width:40px;height:40px;display:grid;place-items:center;background:var(--green);color:#fff;font-family:Georgia,"Times New Roman",serif;font-size:26px}
-.nav-toggle{display:none;border:1px solid var(--rule);background:transparent;min-height:44px;padding:0 14px;color:var(--green);font-weight:600}
-#site-nav{display:flex;align-items:center;gap:28px;font-size:15px;font-weight:600}
+.nav-toggle{display:none;border:1px solid var(--rule);background:transparent;min-height:44px;padding:0 14px;color:var(--green);font-weight:700}
+#site-nav{display:flex;align-items:center;gap:28px;font-size:15px;font-weight:700}
 .nav-cta,.secondary,.cta,.primary{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 18px;font-weight:700}
 .cta,.primary{background:var(--green);color:#fff;border:0}
 .cta:hover,.primary:hover{background:var(--green-deep)}
@@ -33,7 +32,7 @@ h3{font-size:1.3rem;line-height:1.4;letter-spacing:-.03em;font-weight:700}
 .hero,.essay,.location,#steps{padding:88px 0}
 .hero{padding-top:64px;padding-bottom:48px}
 .quote{background:var(--sheet);padding:96px 0}
-.eyebrow{font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--green);margin-bottom:16px}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--green);margin-bottom:16px}
 .hero h1 em{font-style:normal;color:var(--green)}
 .lead,.prose{color:var(--muted)}
 .lead{max-width:36rem;margin-top:22px;font-size:1.08rem}
@@ -54,16 +53,16 @@ h3{font-size:1.3rem;line-height:1.4;letter-spacing:-.03em;font-weight:700}
 .hero-figure{margin-top:88px}
 .photo-frame{position:relative}
 .hero-figure img{width:100%;height:min(68vh,640px);object-fit:cover}
-.photo-label{position:absolute;left:16px;bottom:16px;margin:0;max-width:calc(100% - 32px);background:rgba(255,252,248,.94);color:var(--ink);font-size:13px;font-weight:600;line-height:1.4;padding:8px 12px}
+.photo-label{position:absolute;left:16px;bottom:16px;margin:0;max-width:calc(100% - 32px);background:rgba(255,252,248,.94);color:var(--ink);font-size:13px;font-weight:700;line-height:1.4;padding:8px 12px}
 .location,.quote,#steps{scroll-margin-top:96px}
 .pending-plate{margin-top:104px}
 .map-card{margin-top:56px}
 .total-card{margin-top:64px}
 figure{margin:0}
-figcaption{margin-top:12px;font-size:13px;line-height:1.65}
+figcaption,.credit{margin-top:12px;font-size:12px;line-height:1.6;color:var(--muted)}
 figcaption a,.credits a,.detail-link,.journey a,.map-actions a{text-decoration:underline;text-underline-offset:3px}
 .pending-frame{min-height:440px;padding:28px 28px 32px;background:#efeae1;display:flex;flex-direction:column;justify-content:space-between;border-top:1px solid var(--green)}
-.pending-kicker{font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--green)}
+.pending-kicker{font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--green)}
 .pending-mark{margin:28px 0;font-size:clamp(4.5rem,8vw,7.2rem);line-height:.84;letter-spacing:-.06em;font-weight:700;color:rgba(23,72,61,.2)}
 .section-title{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:40px}
 .section-title .eyebrow{margin-bottom:8px}
@@ -80,7 +79,7 @@ figcaption a,.credits a,.detail-link,.journey a,.map-actions a{text-decoration:u
 .address-list dt{color:var(--muted);font-size:14px}
 .address-list dd{margin:0;overflow-wrap:anywhere}
 .detail-link{margin-top:8px}
-.config-card label:not(.check){display:block;font-weight:600;margin-bottom:18px}
+.config-card label:not(.check){display:block;font-weight:700;margin-bottom:18px}
 .config-card select{display:block;width:100%;min-height:48px;margin-top:8px;padding:0 12px;border:1px solid var(--rule);border-radius:0;background:var(--sheet)}
 .check{display:flex;gap:10px;align-items:flex-start;margin:16px 0;font-size:15px;font-weight:400}
 .check input{width:18px;height:18px;margin-top:4px;accent-color:var(--green)}
@@ -94,7 +93,7 @@ figcaption a,.credits a,.detail-link,.journey a,.map-actions a{text-decoration:u
 .journey{list-style:none;margin:8px 0 0;padding:0}
 .journey li{display:grid;grid-template-columns:72px minmax(0,1fr);gap:18px;padding:28px 0;border-top:1px solid var(--line)}
 .journey li:nth-child(even){margin-left:11%}
-.journey li>span{color:var(--green);font-weight:600;letter-spacing:.06em}
+.journey li>span{color:var(--green);font-weight:700;letter-spacing:.06em}
 .journey p{margin-top:6px;color:var(--muted);max-width:38rem}
 .journey a{display:inline-flex;min-height:44px;align-items:center}
 footer{border-top:1px solid var(--line);padding:40px 0 64px}
@@ -116,6 +115,7 @@ footer{border-top:1px solid var(--line);padding:40px 0 64px}
   .journey li:nth-child(even){margin-left:0}
   .section-title{align-items:start;flex-direction:column;gap:8px;margin-bottom:28px}
 }
+@media(max-width:360px){.wrap{width:calc(100% - 32px)}.brand{font-size:16px}.hero-facts dd{font-size:1rem}}
 @media(max-width:480px){
   .actions{flex-direction:column;align-items:stretch}
   .actions a,.total-card .secondary,.address-card .secondary{width:100%}

@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { createApp } from "../server.mjs";
-import { contractPreviewHref, readContractPreviewQuery } from "../public/homepage-model.mjs";
+import { contractPreviewHref, readContractPreviewQuery, nextQuoteSelection, quoteFailureMessage } from "../public/homepage-model.mjs";
 
 test("contract preview href stays on the demo contract page", () => {
   assert.equal(contractPreviewHref(), "/contract.html?type=individual&months=12&mail=0&meeting=0");
@@ -14,8 +14,11 @@ test("contract preview href stays on the demo contract page", () => {
   assert.throws(() => contractPreviewHref({ months: 2 }), TypeError);
   assert.throws(() => contractPreviewHref({ mail: "yes" }), TypeError);
   assert.deepEqual(readContractPreviewQuery("?type=corporate&months=24&mail=0&meeting=1"), {
-    type: "corporate", months: 24, mail: false, meeting: true, fromQuote: true
+    type: "corporate", months: 24, mail: false, meeting: true, quote: null, fromQuote: true
   });
+  assert.equal(nextQuoteSelection({ type: "individual", months: 12, mail: true, meeting: true }, { type: "corporate", months: 6 }).mail, true);
+  assert.equal(quoteFailureMessage(400).includes("기간"), true);
+  assert.equal(quoteFailureMessage(500).includes("불러오지 못했습니다"), true);
   const rejected = readContractPreviewQuery("?type=person&months=2&mail=true");
   assert.equal(rejected.type, null);
   assert.equal(rejected.months, null);
@@ -27,9 +30,12 @@ test("contract page reads the quote handoff without enabling checkout", async ()
   const src = await readFile(new URL("../public/contract.js", import.meta.url), "utf8");
   const html = await readFile(new URL("../public/contract.html", import.meta.url), "utf8");
   assert.match(src, /readContractPreviewQuery/);
-  assert.match(src, /mail:\s*extras\.mail/);
-  assert.match(src, /meeting:\s*extras\.meeting/);
+  assert.match(src, /\$\("mail"\)\.checked/);
+  assert.match(src, /\$\("meeting"\)\.checked/);
+  assert.doesNotMatch(src, /mail:\s*false/);
   assert.match(html, /id="handoff"/);
+  assert.match(html, /id="mail"/);
+  assert.match(html, /id="meeting"/);
   assert.doesNotMatch(src, /\/api\/checkout/);
 });
 

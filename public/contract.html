@@ -1,1 +1,40 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>전자계약 미리보기 | HAN BIZ OFFICE</title><link rel="stylesheet" href="/portal.css"><link rel="stylesheet" href="/contract.css"><script type="module" src="/contract.js"></script></head><body><header><a href="/">HAN <small>BIZ OFFICE</small></a><a href="/portal.html">운영 스튜디오</a></header><aside>모의 계약 전용 · 실명, 주민등록번호, 사업자번호 등 실제 개인정보를 입력하지 마십시오. 법적 계약 효력 및 결제 없음.</aside><main><h1>전자 임대차계약 미리보기</h1><article class="controls"><h2>01 계약조건 선택</h2><label>사업자 유형<select id="type"><option value="individual">개인사업자</option><option value="corporate">법인사업자</option></select></label><label>기간<select id="months"><option>1</option><option>3</option><option>6</option><option selected>12</option><option>24</option></select>개월</label><label>시작일<input id="start" type="date" value="2026-12-01"></label><button id="generate" class="action">모의 계약서 생성</button></article><p id="status" role="status"></p><p id="handoff" hidden></p><article id="document" hidden></article><article id="review" class="controls" hidden><h2>03 필수 확인 및 모의 서명</h2><div id="consents"></div><p>본인인증 미연결 · 가상 고객만 이용 가능</p><button id="sign" disabled>모의 서명 확정</button></article><article id="receipt" hidden></article><button id="print" class="controls" hidden>인쇄 / PDF로 저장</button></main><footer>(주)청전에스오엔지 · 개발 검수용</footer></body></html>
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>계약 조건 안내 | HAN BIZ OFFICE</title>
+  <link rel="stylesheet" href="/portal.css">
+  <link rel="stylesheet" href="/contract.css">
+  <script type="module" src="/contract.js"></script>
+</head>
+<body>
+  <header><a href="/">HAN <small>BIZ OFFICE</small></a><a href="/account.html">테스트 계정</a></header>
+  <aside>계약 조건 안내입니다. 실제 이름, 주민등록번호, 사업자번호는 입력하지 마세요. 본인 확인과 결제는 아직 시작되지 않습니다.</aside>
+  <main>
+    <h1>이용 계약 조건</h1>
+    <article class="controls">
+      <h2>01 이용 조건</h2>
+      <label>사업자 유형<select id="type"><option value="individual">개인사업자</option><option value="corporate">법인사업자</option></select></label>
+      <label>기간<select id="months"><option>1</option><option>3</option><option>6</option><option selected>12</option><option>24</option></select>개월</label>
+      <label class="check"><input id="mail" type="checkbox"> 우편물 스캔</label>
+      <label class="check"><input id="meeting" type="checkbox"> 회의실 이용</label>
+      <label>시작일<input id="start" type="date" value="2026-12-01"></label>
+      <button id="generate" class="action" type="button">계약 내용 확인</button>
+    </article>
+    <p id="status" role="status"></p>
+    <p id="handoff" hidden></p>
+    <p id="identity-note">본인 확인 서비스는 아직 연결되지 않았습니다.</p>
+    <article id="document" hidden></article>
+    <article id="review" class="controls" hidden>
+      <h2>03 확인 및 서명 안내</h2>
+      <div id="consents"></div>
+      <p>본인 확인 전이며, 테스트 고객만 이용할 수 있습니다.</p>
+      <button id="sign" type="button" disabled>서명 내용 확인</button>
+    </article>
+    <article id="receipt" hidden></article>
+    <button id="print" class="controls" type="button" hidden>인쇄 / PDF로 저장</button>
+  </main>
+  <footer>(주)청전에스오엔지 · 서울 종로 사업장 안내</footer>
+</body>
+</html>
