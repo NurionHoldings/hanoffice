@@ -1,0 +1,12 @@
+---
+description: HAN BIZ OFFICE commercial engineering and acceptance rules
+alwaysApply: true
+---
+# Roles and safety
+Implement operator-approved tasks from docs/CURSOR-WORK-ORDER.md and docs/COMMERCIAL-V2.md. Inspect existing code before editing. Preserve HAN BIZ OFFICE branding and existing working APIs. Never commit secrets, collect real personal data in preview, or enable live checkout. No production deploy or merge without operator approval.
+# Engineering
+Use small reviewable commits, automated tests and evidence. Do not claim completion from mock data. Keep provider integrations behind server-side adapters; verify identity, signatures, payment amounts, order IDs and idempotency. Enforce tenant isolation and durable storage.
+# Design
+Use editorial photography with verified usage rights, clear illustrative labels, strong Korean typography, generous whitespace and asymmetric layouts. No fabricated property photographs. Test desktop and mobile, accessibility and navigation.
+# Reporting
+Report commit SHA, changed files, tests and results, screenshots if available, blockers, risks and next task. Stop at each acceptance gate for review. Never fabricate test evidence.
