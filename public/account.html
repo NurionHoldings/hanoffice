@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>테스트 계정 | HAN BIZ OFFICE</title>
+  <link rel="stylesheet" href="/account.css">
+  <script type="module" src="/account.js"></script>
+</head>
+<body>
+  <header><a href="/">한 비즈 오피스</a><a href="/contract.html">계약 조건</a></header>
+  <main>
+    <h1>테스트 계정</h1>
+    <p class="warn">실제 이름, 주민등록번호, 사업자번호, 카드번호는 입력하지 마세요. 이 화면은 테스트 계정만 다룹니다.</p>
+    <p id="session" role="status">로그인 상태를 확인하고 있습니다.</p>
+    <section>
+      <h2>계정 만들기</h2>
+      <form id="register">
+        <label>테스트 이메일<input name="email" type="email" autocomplete="username" required></label>
+        <label>비밀번호<input name="password" type="password" autocomplete="new-password" minlength="10" required></label>
+        <label>표시 이름<input name="displayName" autocomplete="nickname" required></label>
+        <button type="submit">테스트 계정 만들기</button>
+      </form>
+    </section>
+    <section>
+      <h2>로그인</h2>
+      <form id="login">
+        <label>테스트 이메일<input name="email" type="email" autocomplete="username" required></label>
+        <label>비밀번호<input name="password" type="password" autocomplete="current-password" required></label>
+        <button type="submit">로그인</button>
+      </form>
+    </section>
+    <button id="logout" type="button" hidden>로그아웃</button>
+    <p id="identity">본인 확인 서비스는 아직 연결되지 않았습니다.</p>
+    <p id="message" role="status"></p>
+  </main>
+</body>
+</html>
