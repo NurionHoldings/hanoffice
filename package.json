@@ -8,7 +8,7 @@
     "dev": "node server.mjs",
     "start": "node server.mjs",
     "test": "node --test",
-    "check": "node --check server.mjs && node --check src/catalog.mjs"
+    "check": "node --check server.mjs && node --check src/catalog.mjs && node --check public/homepage-model.mjs && node --check public/app.js && node --check public/contract.js"
   },
   "engines": { "node": ">=20" }
 }

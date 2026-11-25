@@ -4,7 +4,8 @@ import { fileURLToPath } from "node:url";
 import { dirname,join,extname,normalize,sep } from "node:path";
 import { platform,plans,allowedTerms,calculateQuote,isLaunchReady } from "./src/catalog.mjs";
 const root=dirname(fileURLToPath(import.meta.url));
-const mime={".html":"text/html; charset=utf-8",".js":"text/javascript; charset=utf-8",".mjs":"text/javascript; charset=utf-8",".css":"text/css; charset=utf-8",".svg":"image/svg+xml",".json":"application/json; charset=utf-8"};
+const mime={".html":"text/html; charset=utf-8",".js":"text/javascript; charset=utf-8",".mjs":"text/javascript; charset=utf-8",".css":"text/css; charset=utf-8",".svg":"image/svg+xml",".json":"application/json; charset=utf-8",".txt":"text/plain; charset=utf-8",".jpg":"image/jpeg",".jpeg":"image/jpeg",".woff2":"font/woff2"};
+const ALLOWED=new Set(["index.html","styles.css","app.js","homepage-model.mjs","portal.html","portal.css","portal.js","portal-model.mjs","location.html","location.css","location.js","location-model.mjs","contract.html","contract.css","contract.js","contract-model.mjs","fonts/pretendard-400.woff2","fonts/pretendard-600.woff2","fonts/pretendard-700.woff2","fonts/OFL.txt","media/saemunan-street.jpg","media/CREDITS.txt"]);
 const MAX_BODY=8192;
 function reply(res,status,data,headers={}) {
   res.writeHead(status,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store","X-Content-Type-Options":"nosniff",...headers});
@@ -20,14 +21,19 @@ async function getBody(req) {
   try{return JSON.parse(Buffer.concat(chunks).toString("utf8"));}
   catch{const e=new Error("잘못된 JSON입니다.");e.status=400;throw e;}
 }
+function publicFile(urlPath) {
+  let pathWithin;
+  try{pathWithin=urlPath==="/"?"index.html":decodeURIComponent(urlPath).replace(/^\/+/,"");}
+  catch{const error=new Error("BAD_REQUEST");error.status=400;throw error;}
+  const rel=normalize(pathWithin).split(sep).join("/");
+  if(rel.startsWith("../")||rel===".."||rel.includes("/../")||!ALLOWED.has(rel)){const error=new Error("NOT_FOUND");error.status=404;throw error;}
+  return join(root,"public",...rel.split("/"));
+}
 async function serveFile(req,res,path) {
-  let pathWithin;try{pathWithin=path==="/"?"index.html":decodeURIComponent(path).replace(/^\/+/, "");}catch{return reply(res,400,{error:"BAD_REQUEST"});}
-  const safe=normalize(pathWithin);
-  if (safe.startsWith("..") || safe.includes(".."+sep) || !["index.html","styles.css","app.js","portal.html","portal.css","portal.js","portal-model.mjs","location.html","location.css","location.js","location-model.mjs","contract.html","contract.css","contract.js","contract-model.mjs"].includes(safe)){
-    return reply(res,404,{error:"NOT_FOUND"});
-  }
+  let filename;
+  try{filename=publicFile(path);}
+  catch(error){return reply(res,error.status||400,{error:error.status===400?"BAD_REQUEST":"NOT_FOUND"});}
   try {
-    const filename=join(root,"public",safe);
     const s=await stat(filename);
     if(!s.isFile()) return reply(res,404,{error:"NOT_FOUND"});
     res.writeHead(200,{"Content-Type":mime[extname(filename)]||"application/octet-stream","X-Content-Type-Options":"nosniff","Cache-Control":"no-cache"});
